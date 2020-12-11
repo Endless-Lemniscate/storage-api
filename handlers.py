@@ -1,5 +1,6 @@
 from pathlib import Path
 from aiohttp import web
+import aiofiles
 import hashlib
 
 
@@ -19,27 +20,25 @@ async def upload_handle(request):
         md5 = hashlib.md5()
 
         path = Path(storage_folder_path + filename)
-        with path.open('ab') as f:
+        async with aiofiles.open(path, 'ab') as f:
             while True:
                 chunk = await field.read_chunk()
                 if not chunk:
                     break
-                f.write(chunk)
+                await f.write(chunk)
                 md5.update(chunk)
 
         hash_of_file = md5.hexdigest()
-        # create folder
         Path(storage_folder_path + hash_of_file[:2]).mkdir(parents=True, exist_ok=True)
         Path(storage_folder_path + filename).rename(storage_folder_path + hash_of_file[:2] + '/' + hash_of_file)
 
         print("file {} uploaded".format(hash_of_file))
         response = {"hash": hash_of_file}
-        return web.json_response(response)
-
+        return web.json_response(response, status=200, reason='File uploaded successfully')
     except AssertionError:
         response = {'code': 400,
                     'message': 'No field named file in headers'}
-        return web.json_response(response, status=400)
+        return web.json_response(response, status=400, reason='No field named file in headers')
 
 
 async def download_handle(request):
@@ -54,8 +53,8 @@ async def download_handle(request):
         )
     except FileNotFoundError:
         response = {'code': 400,
-                    'message': 'No file with hash = {}'.format(name)}
-        return web.json_response(response, status=400)
+                    'message': 'No file with specified hash found'}
+        return web.json_response(response, status=400, reason='No file with specified hash found')
 
 
 async def delete_handle(request):
@@ -65,9 +64,9 @@ async def delete_handle(request):
     try:
         Path(path_to_file).unlink(missing_ok=False)
         response = {'code': 200,
-                    'message': 'File deleted'}
+                    'message': 'File deleted successfully'}
         return web.json_response(response)
     except FileNotFoundError:
         response = {'code': 400,
-                    'message': 'No file with hash = {}'.format(name)}
-        return web.json_response(response, status=400)
+                    'message': 'No file with specified hash found'}
+        return web.json_response(response, status=400, reason='No file with specified hash found')

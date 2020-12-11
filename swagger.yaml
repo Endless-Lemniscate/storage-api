@@ -1,0 +1,126 @@
+swagger: "2.0"
+info:
+  description: |
+    API for interaction with files on server
+  version: "1.0"
+  title: Storage API
+  contact:
+    name: Endless-Lemniscate@yandex.ru
+basePath: /api/
+schemes:
+  - http
+paths:
+  /file:
+    post:
+      tags:
+        - File
+      summary: Upload file
+      description: Upload file to server
+      produces:
+        - application/json
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload
+          required: true
+
+      responses:
+        "200":
+          description: uploaded successfully
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+
+        "400":
+          description: No field named file in headers
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: No field named file in headers
+
+  /file/{get_by_hash}:
+    get:
+      tags:
+      - File
+      summary: Download file
+      description: Download file from server
+      produces:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: get_by_hash
+          schema:
+            type: string
+          required: true
+          description: Specify hash of file you want to get
+
+      responses:
+        '400':
+          description: No file with specified hash found
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: No file with specified hash found
+
+        '200':
+          description: Download file
+          schema:
+            type: string
+            format: binary
+
+  /file/{delete_by_hash}:
+    delete:
+      tags:
+        - File
+      summary: Delete file
+      description: Delete file from server
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: delete_by_hash
+          schema:
+            type: string
+          required: true
+          description: Specify hash of file you want to delete
+
+      responses:
+        '400':
+          description: No file with specified hash found
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: No file with specified hash found
+
+        '200':
+          description: File deleted successfully
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: File deleted successfully
+
