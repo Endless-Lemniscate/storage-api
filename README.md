@@ -1,6 +1,6 @@
 # storage-api
 
-A simple **aiohttp** app that implements API with following interaction with files in server storage: 
+A simple **aiohttp** app that implements API with following interaction with files on server storage: 
 * Upload
 * Download
 * Delete
