@@ -48,17 +48,17 @@ paths:
                 type: string
                 example: No field named file in headers
 
-  /file/{get_by_hash}:
+  /file/{hash}:
     get:
       tags:
-      - File
+        - File
       summary: Download file
       description: Download file from server
       produces:
-        - multipart/form-data
+        - application/x-binary
       parameters:
         - in: path
-          name: get_by_hash
+          name: hash
           schema:
             type: string
           required: true
@@ -83,7 +83,6 @@ paths:
             type: string
             format: binary
 
-  /file/{delete_by_hash}:
     delete:
       tags:
         - File
@@ -93,7 +92,7 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: delete_by_hash
+          name: hash
           schema:
             type: string
           required: true
@@ -123,4 +122,5 @@ paths:
               message:
                 type: string
                 example: File deleted successfully
+
 
