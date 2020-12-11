@@ -1,0 +1,4 @@
+host: localhost
+port: 8080
+storage_folder_name: store
+path_to_swagger: swagger.yaml

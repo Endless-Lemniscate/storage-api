@@ -2,9 +2,11 @@ from pathlib import Path
 from aiohttp import web
 import aiofiles
 import hashlib
+import yaml
 
 
-STORAGE_FOLDER_NAME = 'store'
+cfg = yaml.full_load(open("config.yaml", "r"))
+STORAGE_FOLDER_NAME = cfg.get('storage_folder_name')
 Path("./" + STORAGE_FOLDER_NAME).mkdir(parents=True, exist_ok=True)
 storage_folder_path = './{}/'.format(STORAGE_FOLDER_NAME)
 

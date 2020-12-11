@@ -1,3 +1,4 @@
 aiohttp-swagger==1.0.15
 aiohttp==3.7.3
 aiofiles==0.6.0
+pyyaml==5.3.1

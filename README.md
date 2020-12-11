@@ -21,3 +21,7 @@ Server starting at localhost:8080 by executing app.py
 All methods of interactions with files documented in swagger page, located at:
     
     http://localhost:8080/api/doc
+
+Important values, such as host, port, path_to_swagger and storage_folder_name can be configured at:
+
+    config.yaml
