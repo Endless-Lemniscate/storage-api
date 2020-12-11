@@ -1,6 +1,6 @@
 # storage-api
 
-A simple Aiohttp app that implements API with following interaction with files in server storage: 
+A simple **aiohttp** app that implements API with following interaction with files in server storage: 
 * Upload
 * Download
 * Delete
@@ -10,7 +10,7 @@ Each file is stored by name equivalent to its *md5 hash* at following path:
 
     /store/{key}/{hash_of_the_file}
 
-where {key} is directory named as two characters of hash of the file, for example:
+where {key} is a directory named as two characters of hash of the file, for example:
 
     /store/87/875d92937013e06abcbcd5758134063b
 
