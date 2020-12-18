@@ -65,6 +65,18 @@ paths:
           description: Specify hash of file you want to get
 
       responses:
+        '401':
+          description: Not valid hash
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Not valid hash
+
         '400':
           description: No file with specified hash found
           schema:
@@ -99,6 +111,18 @@ paths:
           description: Specify hash of file you want to delete
 
       responses:
+        '401':
+          description: Not valid hash
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Not valid hash
+
         '400':
           description: No file with specified hash found
           schema:
